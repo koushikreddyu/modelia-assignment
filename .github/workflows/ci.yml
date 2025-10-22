@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Prepare SQLite DB
-        run: npx prisma migrate deploy && npx prisma db seed --skip-generate
+        run: npx prisma migrate deploy && npx prisma db seed
 
       - name: Run tests with coverage
         run: npm run test:coverage
