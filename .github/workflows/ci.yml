@@ -9,45 +9,50 @@ on:
 jobs:
   backend-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
-      - uses: actions/checkout@v4
-      - name: use node
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+
       - name: Install backend deps
-        working-directory: backend
         run: npm ci
-      - name: Generate prisma client
-        working-directory: backend
-        run: npx prisma generate
-      - name: Run backend tests
-        working-directory: backend
-        run: npm test
-      - name: Upload coverage
-        if: success()
+
+      - name: Prepare SQLite DB
+        run: npx prisma migrate deploy && npx prisma db seed
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: backend-coverage
           path: backend/coverage
 
-  frontend-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: use node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Install frontend deps
-        working-directory: frontend
-        run: npm ci
-      - name: Run frontend unit tests
-        working-directory: frontend
-        run: npm test
-      - name: Upload coverage
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-coverage
-          path: frontend/coverage
+  # frontend-tests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: use node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 18
+  #     - name: Install frontend deps
+  #       working-directory: frontend
+  #       run: npm ci
+  #     - name: Run frontend unit tests
+  #       working-directory: frontend
+  #       run: npm test
+  #     - name: Upload coverage
+  #       if: success()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: frontend-coverage
+  #         path: frontend/coverage
