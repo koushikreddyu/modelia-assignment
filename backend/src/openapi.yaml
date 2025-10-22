@@ -33,6 +33,42 @@ paths:
                 password: { type: string }
       responses:
         "200": {}
+  /generations:
+    post:
+      summary: Create a generation
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                prompt:
+                  type: string
+                style:
+                  type: string
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Invalid input or model overloaded
+    get:
+      summary: Get last generations
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of generations
 
 components:
   securitySchemes:

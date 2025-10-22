@@ -1,19 +1,18 @@
+// backend/jest.config.ts
 import type { Config } from 'jest';
 
 const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  roots: ['<rootDir>/tests'],
-  transform: {
-    '^.+\\.tsx?$': ['ts-jest', { useESM: true }],
-  },
+  roots: ['<rootDir>/src', '<rootDir>/tests'],
+  transform: { '^.+\\.(t|j)sx?$': 'babel-jest' },
+  transformIgnorePatterns: ['node_modules/(?!uuid|nanoid)/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'node'],
   clearMocks: true,
-  extensionsToTreatAsEsm: ['.ts'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov'],
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/']
 };
 
 export default config;
