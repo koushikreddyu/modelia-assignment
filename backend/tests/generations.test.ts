@@ -1,6 +1,8 @@
-import request from 'supertest';
-import { createApp } from '../src/app';
 import path from 'path';
+
+import request from 'supertest';
+
+import { createApp } from '../src/app';
 describe('Generations', () => {
   const app = createApp();
   let token = '';
