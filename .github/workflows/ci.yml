@@ -42,23 +42,23 @@ jobs:
       - name: Lint backend code
         run: npm run lint
 
-  # frontend-tests:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: use node
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 18
-  #     - name: Install frontend deps
-  #       working-directory: frontend
-  #       run: npm ci
-  #     - name: Run frontend unit tests
-  #       working-directory: frontend
-  #       run: npm test
-  #     - name: Upload coverage
-  #       if: success()
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: frontend-coverage
-  #         path: frontend/coverage
+  frontend-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: use node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm ci
+      - name: Run frontend unit tests
+        working-directory: frontend
+        run: npm test
+      - name: Upload coverage
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: frontend/coverage
