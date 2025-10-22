@@ -24,8 +24,8 @@ jobs:
       - name: Install backend deps
         run: npm ci
 
-      - name: Generate prisma client
-        run: npx prisma generate
+      - name: Prepare SQLite DB
+        run: npx prisma migrate deploy && npx prisma db seed --skip-generate
 
       - name: Run tests with coverage
         run: npm run test:coverage
