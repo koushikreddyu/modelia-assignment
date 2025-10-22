@@ -1,4 +1,5 @@
 import request from 'supertest';
+
 import { createApp } from '../src/app';
 describe('Auth', () => {
   const app = createApp();
@@ -12,7 +13,9 @@ describe('Auth', () => {
     expect(login.body.accessToken).toBeDefined();
   });
   it('invalid login', async () => {
-    const res = await request(app).post('/auth/login').send({ email: 'noone@example.com', password: 'x' });
+    const res = await request(app)
+      .post('/auth/login')
+      .send({ email: 'noone@example.com', password: 'x' });
     expect(res.status).toBe(400);
   });
 });

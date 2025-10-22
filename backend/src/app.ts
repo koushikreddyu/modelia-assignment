@@ -1,6 +1,8 @@
+import path from 'path';
+
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
+
 import authRoutes from './routes/auth';
 import genRoutes from './routes/generations';
 

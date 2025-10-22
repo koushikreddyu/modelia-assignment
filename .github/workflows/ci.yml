@@ -38,6 +38,9 @@ jobs:
         with:
           name: backend-coverage
           path: backend/coverage
+      
+      - name: Lint backend code
+        run: npm run lint
 
   # frontend-tests:
   #   runs-on: ubuntu-latest
